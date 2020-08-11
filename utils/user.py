@@ -6,6 +6,7 @@ import contacts
 def _user_exists():
 	pass
 
+
 def _input_credentials():
 	"""Inputs and returns username and password."""
 	username = input('Username: ')
@@ -29,7 +30,9 @@ def add_user():
 
 
 def remove_user():
-	"""Removes a user and associated contact table from the database"""
+	"""Removes a user and associated contact table from the database.
+	Returns a string indicating the status
+	"""
 	username, password = _input_credentials()
 
 	if _user_exists(username, password):
@@ -41,7 +44,9 @@ def remove_user():
 
 
 def select_user():
-	"""Selects a user for current contact operations"""
+	"""Selects a user for current contact operations.
+	Returns a string indicating the status
+	"""
 	username, password = _input_credentials()
 
 	if _user_exists(username, password):
