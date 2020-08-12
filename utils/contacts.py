@@ -1,7 +1,7 @@
 """Module for contacts table management for each user."""
 
 # Name of the current user, initally None
-_username = None
+_username = ""
 
 # Name of current table
 _tablename = "contacts_" + _username
