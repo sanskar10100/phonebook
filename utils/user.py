@@ -44,15 +44,16 @@ def add_user():
 		login = [username, password]
 		encrypted_credentials = [_encryption(login)]
 
-		c.executemany("INSERT INTO contacts_username (?,?)", encrypted_credentials)
+		# Rewrite
+		# c.executemany("INSERT INTO contacts_username (?, ?)", encrypted_credentials)
 
 		#Create contacts table for user. Name: contacts_username
 
 		tablename = 'contacts_' + username
-		c.execute('''CREATE TABLE %s
-		(Name VARCHAR NOT NULL,
-		 Phno VARCHAR NOT NULL,
-		 Email VARCHAR NOT NULL)''' % tablename)
+		c.execute(f'''CREATE TABLE {tablename}
+		(name VARCHAR(255) NOT NULL,
+		 number VARCHAR(15) NOT NULL,
+		 email VARCHAR(255))''')
 		
 		return "User successfully added"
 
