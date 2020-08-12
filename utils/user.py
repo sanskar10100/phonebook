@@ -16,10 +16,10 @@ def _input_credentials():
 
 	return (username, password)
 
-def _encryption(lgoin_details):
-	''' Return the login credential in sha256 encrypted format.'''
+def _encryption(login_details):
+	"""Return the login credential in sha256 encrypted format."""
 	encrpyt_login_details = list()
-	for credential in lgoin_details:
+	for credential in login_details:
 		encypt_login_details.append(hashlib.sha256(credential.encode()).hexdigest())
 	return tuple(encrpyt_login_details)
 
