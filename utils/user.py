@@ -39,13 +39,12 @@ def add_user():
 		c.execute('''CREATE TABLE IF NOT EXISTS users
 					( username VARCHAR(256) NOT NULL,
 					  password VARCHAR(256) NOT NULL
-					);
-					''')
+					);''')
+
 		login = [username, password]
 		encrypted_credentials = [_encryption(login)]
 
-		# Rewrite
-		# c.executemany("INSERT INTO contacts_username (?, ?)", encrypted_credentials)
+		c.executemany("INSERT INTO users (?, ?)", encrypted_credentials)
 
 		#Create contacts table for user. Name: contacts_username
 
