@@ -1,6 +1,8 @@
 """Module for user table management."""
 
 import contacts
+import hashlib
+import sqlite3
 
 # TODO: Write __user_exists function
 def _user_exists():
@@ -14,6 +16,13 @@ def _input_credentials():
 
 	return (username, password)
 
+def _encryption(lgoin_details):
+	''' Return the login credential in sha256 encrypted format.'''
+	encrpyt_login_details = list()
+	for credential in lgoin_details:
+		encypt_login_details.append(hashlib.sha256(credential.encode()).hexdigest())
+	return tuple(encrpyt_login_details)
+
 
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him.
@@ -26,6 +35,17 @@ def add_user():
 	else:
 		# TODO: Add user to users table
 		# TODO: Create contacts table for user. Name: contacts_username
+		conn = sqlite3.connect('material.db')
+		c = conn.cursor()
+		c.execute('''CREATE TABLE IF NOT EXISTS users
+					( username VARCHAR(256) NOT NULL,
+					  password VARCHAR(256) NOT NULL
+					);
+					''')
+		login = [username, password]
+		encrypted_credentials = [_encryption(login)]
+
+		c.executemany("INSERT INTO contacts_username (?,?)", encrypted_credentials)
 		return "User successfully added"
 
 
