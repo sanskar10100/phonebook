@@ -4,6 +4,7 @@ import contacts
 import hashlib
 import sqlite3
 
+
 # TODO: Write __user_exists function
 def _user_exists():
 	pass
@@ -15,6 +16,7 @@ def _input_credentials():
 	password = input('Password: ')
 
 	return (username, password)
+
 
 def _encryption(login_details):
 	"""Return the login credential in sha256 encrypted format."""
