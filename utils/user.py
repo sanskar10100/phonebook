@@ -33,8 +33,7 @@ def add_user():
 	if _user_exists(username, password):
 		return "The user already exists"
 	else:
-		# TODO: Add user to users table
-		# TODO: Create contacts table for user. Name: contacts_username
+		#Add user to users table
 		conn = sqlite3.connect('material.db')
 		c = conn.cursor()
 		c.execute('''CREATE TABLE IF NOT EXISTS users
@@ -46,6 +45,15 @@ def add_user():
 		encrypted_credentials = [_encryption(login)]
 
 		c.executemany("INSERT INTO contacts_username (?,?)", encrypted_credentials)
+
+		#Create contacts table for user. Name: contacts_username
+
+		tablename = 'contacts_' + username
+		c.execute('''CREATE TABLE %s
+		(Name VARCHAR NOT NULL,
+		 Phno VARCHAR NOT NULL,
+		 Email VARCHAR NOT NULL)''' % tablename)
+		
 		return "User successfully added"
 
 
