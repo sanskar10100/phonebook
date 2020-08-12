@@ -4,12 +4,10 @@ import contacts
 import hashlib
 import sqlite3
 
-<<<<<<< HEAD
+
 # opening database and setting connection
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
-=======
->>>>>>> 4d8b126944daf23f4374b03add865627c92999e2
 
 # TODO: Write __user_exists function
 def _user_exists():
