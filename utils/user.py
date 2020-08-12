@@ -4,9 +4,12 @@ import contacts
 import hashlib
 import sqlite3
 
+<<<<<<< HEAD
 # opening database and setting connection
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
+=======
+>>>>>>> 4d8b126944daf23f4374b03add865627c92999e2
 
 # TODO: Write __user_exists function
 def _user_exists():
@@ -20,12 +23,13 @@ def _input_credentials():
 
 	return (username, password)
 
+
 def _encryption(login_details):
 	"""Return the login credential in sha256 encrypted format."""
-	encrpyt_login_details = list()
+	encrypt_login_details = list()
 	for credential in login_details:
-		encypt_login_details.append(hashlib.sha256(credential.encode()).hexdigest())
-	return tuple(encrpyt_login_details)
+		encrypt_login_details.append(hashlib.sha256(credential.encode()).hexdigest())
+	return tuple(encrypt_login_details)
 
 
 def add_user():
