@@ -4,6 +4,10 @@ import contacts
 import hashlib
 import sqlite3
 
+# opening database and setting connection
+conn = sqlite3.connect('material.db')
+c = conn.cursor()
+
 # TODO: Write __user_exists function
 def _user_exists():
 	pass
@@ -34,8 +38,6 @@ def add_user():
 		return "The user already exists"
 	else:
 		#Add user to users table
-		conn = sqlite3.connect('material.db')
-		c = conn.cursor()
 		c.execute('''CREATE TABLE IF NOT EXISTS users
 					( username VARCHAR(256) NOT NULL,
 					  password VARCHAR(256) NOT NULL
@@ -46,6 +48,8 @@ def add_user():
 
 		c.executemany("INSERT INTO users (?, ?)", encrypted_credentials)
 
+		conn.commit()
+
 		#Create contacts table for user. Name: contacts_username
 
 		tablename = 'contacts_' + username
@@ -53,6 +57,8 @@ def add_user():
 		(name VARCHAR(255) NOT NULL,
 		 number VARCHAR(15) NOT NULL,
 		 email VARCHAR(255))''')
+		
+		conn.commit()
 		
 		return "User successfully added"
 
@@ -64,7 +70,12 @@ def remove_user():
 	username, password = _input_credentials()
 
 	if _user_exists(username, password):
-		# TODO: Remove user from users table
+		#Remove user from users table
+		login = [username]
+		encrypt_username = _encryption(login)
+		c.execute("DELETE FROM Phonebook WHERE username = ?", encrypt_username)
+		conn.commit()
+
 		# TODO: Remove users contacts table
 		return "User successfully removed"
 	else:
