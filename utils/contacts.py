@@ -1,10 +1,17 @@
 """Module for contacts table management for each user."""
 
-# Name of the current user, initally None
-_username = ""
+# For scrub
+import user
 
 # Name of current table
-_tablename = "contacts_" + _username
+_tablename = ''
+
+def _set_tablename(username):
+	# Allows changing the value of global var tablename
+	global _tablename
+	"""Sets tablename based on the username obtained from user module."""
+	_tablename = 'contacts_' + username
+	_tablename = user._scrub(_tablename)
 
 
 def show_all_contacts():

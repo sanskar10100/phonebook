@@ -31,10 +31,13 @@ def _user_exists(username):
 def _user_auth(username, password):
 	"""Returns true if the username and password both exist in the database."""
 	login_credentials = [username, password]
-	encrypted_credentials = _encrpytion(login_credentials)
+	encrypted_credentials = _encryption(login_credentials)
 
-	sql = c.execute('''SELECT * FROM users
+	try:
+		sql = c.execute('''SELECT * FROM users
 					WHERE username = ? AND password = ?''', encrypted_credentials)
+	except:
+		print('Users table does not exist. Please create a user first')
 
 	record = c.fetchone()
 	if record is None:
@@ -123,7 +126,7 @@ def select_user():
 	username, password = _input_credentials()
 
 	if _user_auth(username, password):
-		contacts._username = username
+		contacts._set_tablename(username)
 		return "User successfully selected"
 	else:
 		return "User not found"
