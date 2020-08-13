@@ -12,19 +12,20 @@ c = conn.cursor()
 
 def _user_exists(username, password):
 	"""Checking if the user already exists or not"""
-	encrypted_credentials = _encryption([username, password])
+	login = [username]
+	encrypted_credentials = _encryption(login)
 	# User table doesn't exist on first run, so silence the error from sqlite
 	# that the table doesn't exist
 	try:
-		sql = c.execute("SELECT username FROM users WHERE username = ? and password = ?", encrypted_credentials)
+		sql = c.execute("SELECT username FROM users WHERE username = ?", encrypted_credentials)
 	except:
 		pass
 
 	row = c.fetchone()
-	if row:
-		return True
-	else:
+	if row is None:
 		return False
+	else:
+		return True
 	
 
 def _input_credentials():
@@ -94,7 +95,7 @@ def remove_user():
 
 		#Remove users contacts table
 		tablename = _scrub('contacts_' + username)
-		c.execute(f"DROP TABLE {tablename}")
+		c.execute(f"DROP TABLE {tablename} ")
 		return "User successfully removed"
 	else:
 		return "User not found"
