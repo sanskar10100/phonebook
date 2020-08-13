@@ -38,7 +38,7 @@ def _input_credentials():
 
 def _scrub(table_name):
 	"""Sanitzes input for database"""
-    return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
+	return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
 
 
 def _encryption(login_details):
