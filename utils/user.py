@@ -1,4 +1,4 @@
-"""Module for user table management."""
+ """Module for user table management."""
 
 import contacts
 import hashlib
@@ -9,10 +9,20 @@ import sqlite3
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
-
 # TODO: Write __user_exists function
-def _user_exists():
-	pass
+def _user_exists(username, password):
+	"""Checking if the user already exists or not"""
+
+	login = [username]
+	encrypted_credentials = [_encryption(login)]
+
+	sql = c.execute("SELECT username FROM users WHERE username = ?", encrypted_credentials):
+	row = c.fetchone()
+	if row IS NONE:
+		return False
+	else:
+		return True
+	
 
 
 def _input_credentials():
