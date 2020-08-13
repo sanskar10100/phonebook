@@ -9,6 +9,7 @@ import sqlite3
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
+
 # TODO: Write __user_exists function
 def _user_exists():
 	pass
