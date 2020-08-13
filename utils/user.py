@@ -1,6 +1,6 @@
 """Module for user table management."""
 
-import contacts
+from . import contacts
 import hashlib
 import sqlite3
 
@@ -33,11 +33,13 @@ def _user_auth(username, password):
 	login_credentials = [username, password]
 	encrypted_credentials = _encryption(login_credentials)
 
+	# If table lookup fails, most likely cause is that table doesn't exist, in which case
+	# simply returns false
 	try:
 		sql = c.execute('''SELECT * FROM users
 					WHERE username = ? AND password = ?''', encrypted_credentials)
 	except:
-		print('Users table does not exist. Please create a user first')
+		return False
 
 	record = c.fetchone()
 	if record is None:
@@ -48,7 +50,7 @@ def _user_auth(username, password):
 
 def _input_credentials():
 	"""Inputs and returns username and password."""
-	username = input('Username: ')
+	username = input('\nUsername: ')
 	password = input('Password: ')
 
 	return (username, password)
@@ -69,12 +71,12 @@ def _encryption(login_details):
 
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him.
-	Returns a string indicating the status
+	Returns a boolean indicating status
 	"""
 	username, password = _input_credentials()
 
 	if _user_exists(username):
-		return "The user already exists"
+		return False
 	else:
 		#Add user to users table
 		c.execute("""CREATE TABLE IF NOT EXISTS users( 
@@ -95,8 +97,8 @@ def add_user():
 			""")
 		
 		conn.commit()
-		
-		return "User successfully added"
+
+		return True
 
 
 def remove_user():
@@ -114,9 +116,9 @@ def remove_user():
 		#Remove users contacts table
 		tablename = _scrub('contacts_' + username)
 		c.execute(f"DROP TABLE {tablename} ")
-		return "User successfully removed"
+		return True
 	else:
-		return "User not found"
+		return False
 
 
 def select_user():
@@ -127,6 +129,6 @@ def select_user():
 
 	if _user_auth(username, password):
 		contacts._set_tablename(username)
-		return "User successfully selected"
+		return True
 	else:
-		return "User not found"
+		return False

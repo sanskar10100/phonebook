@@ -1,12 +1,16 @@
-"""Integration and Front-End module"""
+"""phonebook is a simple contact management tool written in python.
+It hosts seperate phonebooks or contact lists for each user (that's right, we support multiple users)
+Offers user management options like addition, removal and selection.
+Also offers contact management option for each user, like addition, deletetion, searching etc
+It also supports import and export of most CSV files for contacts
+"""
 
 
-import utils.user
-import utils.contacts
+from utils import user
 
-
-def input_user_menu_choice():
+def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
+	print('\n')
 	print('1. Add user')
 	print('2. Delete user')
 	print('3: Select user')
@@ -18,7 +22,7 @@ def input_user_menu_choice():
 		return choice
 
 
-def input_contact_menu_choice():
+def _input_contact_menu_choice():
 	"""Displays contact management options and returns user's input choice"""
 	print('1. Show all contacts')
 	print('2. Add contact')
@@ -37,5 +41,23 @@ def input_contact_menu_choice():
 
 
 if __name__ == "__main__":
-	user_menu_choice = input_user_menu_choice()
-	contact_menu_choice = input_contact_menu_choice()
+	# Redraw user management menu until a user is successfully selected
+	while True:
+		user_choice = _input_user_menu_choice()
+		if user_choice == 1:
+			if user.add_user() is True:
+				print('User successfully added')
+			else:
+				print('Error: Could not add user')
+		elif user_choice == 2:
+			if user.remove_user() is True:
+				print('User successfully removed')
+			else:
+				print('Error: Could not remove user')
+		else:
+			if user.select_user() is True:
+				print('User successfully selected')
+				break
+			else:
+				print('Could not select user')
+
