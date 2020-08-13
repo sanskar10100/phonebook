@@ -13,9 +13,14 @@ c = conn.cursor()
 def _user_exists(username, password):
 	"""Checking if the user already exists or not"""
 	login = [username]
-	encrypted_credentials = [_encryption(login)]
+	encrypted_credentials = _encryption(login)
+	# User table doesn't exist on first run, so silence the error from sqlite
+	# that the table doesn't exist
+	try:
+		sql = c.execute("SELECT username FROM users WHERE username = ?", encrypted_credentials)
+	except:
+		pass
 
-	sql = c.execute("SELECT username FROM users WHERE username = ?", encrypted_credentials)
 	row = c.fetchone()
 	if row is None:
 		return False
