@@ -69,7 +69,7 @@ def add_user():
 
 		#Create contacts table for user. Name: contacts_username
 		#Scrubing the username.
-		tablename = scrub('contacts_' + username)
+		tablename = _scrub('contacts_' + username)
 		c.execute(f"""CREATE TABLE {tablename} (
 			name VARCHAR(255) NOT NULL,
 			phno VARCHAR(20) NOT NULL,
@@ -94,7 +94,7 @@ def remove_user():
 		conn.commit()
 
 		#Remove users contacts table
-		tablename = scrub('contacts_' + username)
+		tablename = _scrub('contacts_' + username)
 		c.execute(f"DROP TABLE {tablename} ")
 		return "User successfully removed"
 	else:
