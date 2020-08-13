@@ -89,7 +89,7 @@ def remove_user():
 
 	if _user_exists(username, password):
 		#Remove user from users table
-		encrypted_username = _encryption([login])
+		encrypted_username = _encryption([username])
 		c.execute("DELETE FROM users WHERE username = ?", encrypted_username)
 		conn.commit()
 
