@@ -12,8 +12,7 @@ c = conn.cursor()
 
 def _user_exists(username, password):
 	"""Checking if the user already exists or not"""
-	login = [username]
-	encrypted_credentials = _encryption(login)
+	encrypted_credentials = _encryption([username, password])
 	# User table doesn't exist on first run, so silence the error from sqlite
 	# that the table doesn't exist
 	try:
