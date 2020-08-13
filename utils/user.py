@@ -94,7 +94,7 @@ def remove_user():
 
 		#Remove users contacts table
 		tablename = _scrub('contacts_' + username)
-		c.execute(f"DROP TABLE {tablename} ")
+		c.execute(f"DROP TABLE {tablename}")
 		return "User successfully removed"
 	else:
 		return "User not found"
