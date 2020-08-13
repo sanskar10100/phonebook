@@ -16,15 +16,15 @@ def _user_exists(username, password):
 	# User table doesn't exist on first run, so silence the error from sqlite
 	# that the table doesn't exist
 	try:
-		sql = c.execute("SELECT username FROM users WHERE username = ?", encrypted_credentials)
+		sql = c.execute("SELECT username FROM users WHERE username = ? and password = ?", encrypted_credentials)
 	except:
 		pass
 
 	row = c.fetchone()
-	if row is None:
-		return False
-	else:
+	if row:
 		return True
+	else:
+		return False
 	
 
 def _input_credentials():
