@@ -67,7 +67,7 @@ def add_user():
 			name VARCHAR(255) NOT NULL,
 			phno VARCHAR(20) NOT NULL,
 			email VARCHAR(255) NOT NULL);
-			"""% tablename)
+			""" % tablename)
 		
 		conn.commit()
 		
@@ -82,12 +82,13 @@ def remove_user():
 
 	if _user_exists(username, password):
 		#Remove user from users table
-		login = [username]
-		encrypt_username = _encryption(login)
+		encrypt_username = _encryption([login])
 		c.execute("DELETE FROM Phonebook WHERE username = ?", encrypt_username)
 		conn.commit()
 
-		# TODO: Remove users contacts table
+		#Remove users contacts table
+		tablename = scrub('contacts_' + username)
+		c.execute("DROP TABLE %s " % tablename)
 		return "User successfully removed"
 	else:
 		return "User not found"
