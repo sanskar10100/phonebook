@@ -35,6 +35,9 @@ def _input_credentials():
 
 	return (username, password)
 
+def _scrub(table_name):
+    return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
+
 
 def _encryption(login_details):
 	"""Return the login credential in sha256 encrypted format."""
@@ -54,25 +57,22 @@ def add_user():
 		return "The user already exists"
 	else:
 		#Add user to users table
-		c.execute('''CREATE TABLE IF NOT EXISTS users
-					( username VARCHAR(256) NOT NULL,
-					  password VARCHAR(256) NOT NULL
-					);''')
-
-		login = [username, password]
-		encrypted_credentials = [_encryption(login)]
-
-		c.executemany("INSERT INTO users (?, ?)", encrypted_credentials)
-
+		c.execute("""CREATE TABLE IF NOT EXISTS users( 
+			username VARCHAR(256) NOT NULL,
+			password VARCHAR(256) NOT NULL);
+		""")
+		encrypted_credentials = _encryption([username, password])
+		c.execute("INSERT INTO users VALUES (?,?);", encrypted_credentials)
 		conn.commit()
 
 		#Create contacts table for user. Name: contacts_username
-
-		tablename = 'contacts_' + username
-		c.execute(f'''CREATE TABLE {tablename}
-		(name VARCHAR(255) NOT NULL,
-		 number VARCHAR(15) NOT NULL,
-		 email VARCHAR(255))''')
+		#Scrubing the username.
+		tablename = scrub('contacts_' + username)
+		c.execute("""CREATE TABLE %s (
+			name VARCHAR(255) NOT NULL,
+			phno VARCHAR(20) NOT NULL,
+			email VARCHAR(255) NOT NULL);
+			""" % tablename)
 		
 		conn.commit()
 		
@@ -87,12 +87,13 @@ def remove_user():
 
 	if _user_exists(username, password):
 		#Remove user from users table
-		login = [username]
-		encrypt_username = _encryption(login)
+		encrypt_username = _encryption([login])
 		c.execute("DELETE FROM Phonebook WHERE username = ?", encrypt_username)
 		conn.commit()
 
-		# TODO: Remove users contacts table
+		#Remove users contacts table
+		tablename = scrub('contacts_' + username)
+		c.execute("DROP TABLE %s " % tablename)
 		return "User successfully removed"
 	else:
 		return "User not found"
