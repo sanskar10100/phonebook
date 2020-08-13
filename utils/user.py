@@ -10,7 +10,7 @@ conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
 
-def _user_auth(username):
+def _user_exists(username):
 	"""Returns true if the username already exists in the users table."""
 	login = [username]
 	encrypted_credentials = _encryption(login)
