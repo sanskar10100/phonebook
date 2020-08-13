@@ -9,7 +9,7 @@ import sqlite3
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
-# TODO: Write __user_exists function
+
 def _user_exists(username, password):
 	"""Checking if the user already exists or not"""
 	login = [username]
@@ -35,7 +35,9 @@ def _input_credentials():
 
 	return (username, password)
 
+
 def _scrub(table_name):
+	"""Sanitzes input for database"""
     return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
 
 
@@ -68,11 +70,11 @@ def add_user():
 		#Create contacts table for user. Name: contacts_username
 		#Scrubing the username.
 		tablename = scrub('contacts_' + username)
-		c.execute("""CREATE TABLE %s (
+		c.execute(f"""CREATE TABLE {tablename} (
 			name VARCHAR(255) NOT NULL,
 			phno VARCHAR(20) NOT NULL,
 			email VARCHAR(255) NOT NULL);
-			""" % tablename)
+			""")
 		
 		conn.commit()
 		
@@ -87,13 +89,13 @@ def remove_user():
 
 	if _user_exists(username, password):
 		#Remove user from users table
-		encrypt_username = _encryption([login])
-		c.execute("DELETE FROM Phonebook WHERE username = ?", encrypt_username)
+		encrypted_username = _encryption([login])
+		c.execute("DELETE FROM users WHERE username = ?", encrypted_username)
 		conn.commit()
 
 		#Remove users contacts table
 		tablename = scrub('contacts_' + username)
-		c.execute("DROP TABLE %s " % tablename)
+		c.execute(f"DROP TABLE {tablename} ")
 		return "User successfully removed"
 	else:
 		return "User not found"
