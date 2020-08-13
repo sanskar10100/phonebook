@@ -10,8 +10,8 @@ conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
 
-def _user_exists(username, password):
-	"""Checking if the user already exists or not"""
+def _user_auth(username):
+	"""Returns true if the username already exists in the users table."""
 	login = [username]
 	encrypted_credentials = _encryption(login)
 	# User table doesn't exist on first run, so silence the error from sqlite
@@ -23,6 +23,21 @@ def _user_exists(username, password):
 
 	row = c.fetchone()
 	if row is None:
+		return False
+	else:
+		return True
+
+
+def _user_auth(username, password):
+	"""Returns true if the username and password both exist in the database."""
+	login_credentials = [username, password]
+	encrypted_credentials = _encrpytion(login_credentials)
+
+	sql = c.execute('''SELECT * FROM users
+					WHERE username = ? AND password = ?''', encrypted_credentials)
+
+	record = c.fetchone()
+	if record is None:
 		return False
 	else:
 		return True
@@ -55,7 +70,7 @@ def add_user():
 	"""
 	username, password = _input_credentials()
 
-	if _user_exists(username, password):
+	if _user_exists(username):
 		return "The user already exists"
 	else:
 		#Add user to users table
@@ -87,7 +102,7 @@ def remove_user():
 	"""
 	username, password = _input_credentials()
 
-	if _user_exists(username, password):
+	if _user_auth(username, password):
 		#Remove user from users table
 		encrypted_username = _encryption([username])
 		c.execute("DELETE FROM users WHERE username = ?", encrypted_username)
@@ -107,7 +122,7 @@ def select_user():
 	"""
 	username, password = _input_credentials()
 
-	if _user_exists(username, password):
+	if _user_auth(username, password):
 		contacts._username = username
 		return "User successfully selected"
 	else:
