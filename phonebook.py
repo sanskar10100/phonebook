@@ -92,7 +92,10 @@ def _contacts_management():
 			else:
 				print('Could not add contact')
 		elif contacts_choice == 3:
-			contacts.delete_contact()
+			if contacts.delete_contact() is True:
+				print('Contact deleted successfully')
+			else:
+				print('Contact not found')
 		elif contacts_choice == 4:
 			contacts.search_contact()
 		elif contacts_choice == 5:

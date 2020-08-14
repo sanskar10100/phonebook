@@ -76,9 +76,21 @@ def add_contact():
 		return False
 
 
-def delete_contact(choice):
+def delete_contact():
 	"""Deletes contact based on the user input from the contacts table"""
-	pass
+	delete_contact_name = ''
+
+	while delete_contact_name == '' or delete_contact_name == ' ':
+		delete_contact_name = input('Enter name of contact to delete: ')
+
+	# If there's at least one entry in table with given key name, then delete it
+	if c.execute(f'''SELECT * FROM {_tablename} WHERE name = ?''', (delete_contact_name, )).fetchone() is not None:
+		query = c.execute(f'''DELETE FROM {_tablename}
+							WHERE name = ?''', (delete_contact_name, ))
+		conn.commit()
+		return True
+	else:
+		return False
 
 
 def search_contact():
