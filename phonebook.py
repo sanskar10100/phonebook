@@ -63,18 +63,18 @@ def _user_management():
 			if user.add_user() is True:
 				print('User successfully added')
 			else:
-				print('Error: Could not add user')
+				print('Error: user already exists')
 		elif user_choice == 2:
 			if user.remove_user() is True:
 				print('User successfully removed')
 			else:
-				print('Error: Could not remove user')
+				print('Error: user does not exist')
 		elif user_choice == 3:
 			if user.select_user() is True:
 				print('User successfully selected')
 				break
 			else:
-				print('Could not select user')
+				print('Error: user does not exist')
 		else:
 			_trigger_exit()
 
@@ -100,9 +100,15 @@ def _contacts_management():
 			if contacts.search_contact() is False:
 				print('Contact lookup failed')
 		elif contacts_choice == 5:
-			contacts.import_csv()
+			if contacts.import_csv() is True:
+				print('CSV import successful')
+			else:
+				print('CSV import failed')
 		elif contacts_choice == 6:
-			contacts.export_csv()
+			if contacts.export_csv() is True:
+				print('CSV export successful')
+			else:
+				print('CSV export failed')
 		elif contacts_choice == 7:
 			_user_management()
 		elif contacts_choice == 8:
