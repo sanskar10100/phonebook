@@ -3,6 +3,8 @@
 # For scrub
 from . import user
 import sqlite3
+import csv
+import os
 
 
 # Global sqlite3 connection and cursor
@@ -86,7 +88,25 @@ def search_contact():
 
 def import_csv():
 	"""Imports a CSV and stores the data into table."""
-	pass
+	contact_row = list()
+	file_name = input("Enter file name : ")
+	if not os.path.exists(file_name):
+		return False
+	path = os.path.join(os.getcwd(), file_name)
+	with open(path, 'r') as file:
+		csv_reader = csv.DictReader(file)
+		for key in csv_reader:
+			for value in key.values():
+				contact_row.append(value)
+
+			contact_tuple = tuple(contact_row)
+			contact_row.clear()
+			# insert the value in user name table
+			c.execute(f'''INSERT INTO {_tablename} 
+							VALUES (?, ?, ?);''', contact_tuple)
+			conn.commit()
+	return True
+			
 
 
 def export_csv():
