@@ -28,6 +28,8 @@ def show_all_contacts():
 	print('Showing all contact...')
 
 	# showing all contact
+	contact_count = c.execute(f'SELECT COUNT(*) FROM {_tablename}').fetchone()
+	print(f'Total Contact Count: {contact_count}')
 	for name, num, email in c.execute(f'SELECT name, phno, email FROM {_tablename}'):
 		print(f'Name: {name} | Number: {num} | Email: {email}')
 
