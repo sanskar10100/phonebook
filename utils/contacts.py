@@ -84,21 +84,21 @@ def delete_contact(choice):
 def search_contact():
 	"""Searches a contact in the current table and prints all relevant matches."""
 	print('Enter Name to search the contact...')
-    name = input('Name: ')
+	name_key = input('Name: ')
 
-    while name == '' or name == ' ':
-        print('No input..\ntry again: ')
-        name_key = input('Name: ')
+	while name_key == '' or name_key == ' ':
+		print('No input..\ntry again: ')
+		name_key = input('Name: ')
 
-    # flag
-    flag = False
-    for contact_name, number, email in c.execute(f'SELECT * FROM {_tablename}'):
-    	if name_key in contact_name:
-   		 	print(f'Name: {contact_name} | Number: {number} | Email: {email}')
-    		flag = True
+	# flag
+	flag = False
+	for contact_name, number, email in c.execute(f'SELECT * FROM {_tablename}'):
+		if name_key in contact_name:
+			print(f'Name: {contact_name} | Number: {number} | Email: {email}')
+			flag = True
 
-    if flag == False:
-    	print('Invalid Search:')
+	if flag == False:
+		print('Not found!')
 
 
 def import_csv():
