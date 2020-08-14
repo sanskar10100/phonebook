@@ -109,8 +109,7 @@ def search_contact():
 			print(f'Name: {contact_name} | Number: {number} | Email: {email}')
 			flag = True
 
-	if flag == False:
-		print('Not found!')
+	return flag
 
 
 def import_csv():

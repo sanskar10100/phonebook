@@ -97,7 +97,8 @@ def _contacts_management():
 			else:
 				print('Contact not found')
 		elif contacts_choice == 4:
-			contacts.search_contact()
+			if contacts.search_contact() is False:
+				print('Contact lookup failed')
 		elif contacts_choice == 5:
 			contacts.import_csv()
 		elif contacts_choice == 6:
