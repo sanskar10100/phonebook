@@ -21,10 +21,40 @@ def show_all_contacts():
 
 
 def add_contact():
-	"""Adds a contact to the contacts table.
-	Returns true if successful"""
-	pass
+	"""Adds a contact to the contacts table"""
+	contact_list = list()
 
+	# contact name
+	contact_name = input('Name: ')
+	if contact_name == '' or contact_name == ' ':
+		print('Contact Name can not be null:')
+		contact_name = input('Name: ')
+
+	# append the name in list
+	contact_list.append(contact_name)
+
+	#contact number
+	contact_num = input('Number: ')
+	if contact_num == '' or contact_num == ' ':
+		contact_num = input('Number: ')
+
+	contact_list.append(contact_num)
+
+	# contact email
+	contact_email = input('Email: ')
+	if contact_email == '' or contact_email == ' ':
+		contact_email = 'NULL'
+
+	contact_list.append(contact_email)
+
+	# converting list into tuple
+	contact_tuple = tuple(contact_list)
+	
+	# insert the value in user name table
+	c.execute(f'INSERT INTO {_tablename} VALUES (?, ?, ?) ', contact_tuple)
+	conn.commit()
+
+	return 'contact added succefully:'	
 
 def delete_contact(choice):
 	"""Deletes contact based on the user input from the contacts table/
