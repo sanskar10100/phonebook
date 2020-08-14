@@ -25,11 +25,13 @@ def _set_tablename(username):
 
 def show_all_contacts():
 	"""Shows all contacts in a user's contact table along with the total contact count."""
-	print('Showing all contact...')
+	print('\nShowing all contact...')
 
-	# showing all contact
-	contact_count = c.execute(f'SELECT COUNT(*) FROM {_tablename}').fetchone()
+	# execute returns a sqlite object, fetchone fetches the tuple, and index 0 returns the first entry,
+	# is the count
+	contact_count = c.execute(f'SELECT COUNT(*) FROM {_tablename}').fetchone()[0]
 	print(f'Total Contact Count: {contact_count}')
+	# showing all contact
 	for name, num, email in c.execute(f'SELECT name, phno, email FROM {_tablename}'):
 		print(f'Name: {name} | Number: {num} | Email: {email}')
 
