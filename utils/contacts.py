@@ -113,7 +113,7 @@ def search_contact():
 
 
 def import_csv():
-	"""Imports a CSV and stores the data into table."""
+	"""Imports a CSV from the current directory and stores the data into table."""
 	contact_row = list()
 	file_name = input("Enter file name : ")
 	if not os.path.exists(file_name):
@@ -136,5 +136,21 @@ def import_csv():
 
 
 def export_csv():
-	"""Exports contents of table to a csv file. Input name from user."""
-	pass
+	"""Exports contents of table to a csv file in the current directory. Input name from user."""
+	filename = ''
+
+	# Read the CSV filename while handling incorrect inputs
+	while filename.isalnum() is False and '.' not in filename:
+		filename = input('CSV filename: ')
+		if filename.isalnum() is False and '.' not in filename:
+			print('Error: Invalid filename. Try again!\n')
+
+	try:
+		with open(filename, 'w') as file:
+			csv_writer = csv.writer(file)
+			for row in c.execute(f'SELECT * FROM {_tablename}'):
+				csv_writer.writerow(row)
+			else:
+				return True
+	except:
+		return False
