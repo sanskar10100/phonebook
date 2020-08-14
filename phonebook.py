@@ -12,6 +12,13 @@ from utils import contacts
 import sys
 import time
 
+def _trigger_exit():
+	"""Initiates the exit sequence."""
+	print('\nExiting phonebook!')
+	time.sleep(1)
+	sys.exit(1)
+
+
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
 	print('\n')
@@ -21,7 +28,7 @@ def _input_user_menu_choice():
 	print('4. Exit')
 	choice = int(input('Input choice: '))
 
-	if choice < 1 or choice > 3:
+	if choice < 1 or choice > 4:
 		raise Exception('Invalid choice')
 	else:
 		return choice
@@ -62,12 +69,14 @@ def _user_management():
 				print('User successfully removed')
 			else:
 				print('Error: Could not remove user')
-		else:
+		elif user_choice == 3:
 			if user.select_user() is True:
 				print('User successfully selected')
 				break
 			else:
 				print('Could not select user')
+		else:
+			_trigger_exit()
 
 
 def _contacts_management():
@@ -93,17 +102,17 @@ def _contacts_management():
 		elif contacts_choice == 7:
 			_user_management()
 		elif contacts_choice == 8:
-			print('Exiting phonebook')
-			time.sleep(1)
-			sys.exit(1)
+			_trigger_exit()
 
 
 
 if __name__ == "__main__":
 	try:
 		_user_management()
+	except KeyboardInterrupt:
+		_trigger_exit()
+	
+	try:
 		_contacts_management()
 	except KeyboardInterrupt:
-		print('\nExiting phonebook!')
-		time.sleep(1)
-		sys.exit(1)
+		_trigger_exit()
