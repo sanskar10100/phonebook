@@ -23,15 +23,14 @@ A simple python app for managing phonebooks for various users.
 
 ---
 
-**Note:** Do not delete the database, or you'll lose all your data (duh).
+## Note: Do not delete the database, or you'll lose all your data (duh).
 
 ---
-
-[Report a new bug/issue](https://github.com/AritificialPhysics/phonebook/issues/new)
-
 
 ### Authored by (in alphabetical order):
 - Anuj Kumar Singh
 - Sanskar Agrawal
 - Saumy Pandey
 - Som Shiv Gupta
+
+[Report a new bug/issue](https://github.com/AritificialPhysics/phonebook/issues/new)
