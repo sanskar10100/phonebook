@@ -62,7 +62,7 @@ def add_contact():
 					VALUES (?, ?, ?);''', contact_tuple)
 	conn.commit()
 
-	return 'contact added succefully:'
+	return 'contact added successfully:'
 
 
 def delete_contact(choice):
