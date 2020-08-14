@@ -26,7 +26,7 @@ def add_contact():
 
 	# contact name
 	contact_name = input('Name: ')
-	if contact_name == '' or contact_name == ' ':
+	while contact_name == '' or contact_name == ' ':
 		print('Contact Name can not be null:')
 		contact_name = input('Name: ')
 
@@ -35,7 +35,8 @@ def add_contact():
 
 	#contact number
 	contact_num = input('Number: ')
-	if contact_num == '' or contact_num == ' ':
+	while contact_num == '' or contact_num == ' ':
+		print('Contact Number can not be null:')
 		contact_num = input('Number: ')
 
 	contact_list.append(contact_num)
@@ -65,7 +66,12 @@ def delete_contact(choice):
 def search_contact():
 	"""Searches a contact in the current table and prints all relevant matches.
 	Returns a tuple containing all the matches. If no matches are found, returns False"""
-	pass
+	print('Search contact here...')
+	name_key = input('Enter name: ')
+
+	for contact_detail in c.execute(f'SELECT name FROM material.COLUMNS WHERE {_tablename} = name_key')
+
+
 
 
 def import_csv():
