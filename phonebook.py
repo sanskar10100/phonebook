@@ -15,7 +15,7 @@ import time
 def _trigger_exit():
 	"""Initiates the exit sequence."""
 	print('\nExiting phonebook!')
-	time.sleep(1)
+	time.sleep(0.3)
 	sys.exit(1)
 
 
