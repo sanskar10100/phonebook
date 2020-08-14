@@ -25,7 +25,11 @@ def _set_tablename(username):
 
 def show_all_contacts():
 	"""Shows all contacts in a user's contact table along with the total contact count."""
-	pass
+	printf('Showing all contact...')
+
+	# showing all contact
+	for name, num, email in c.execute(f'SELECT name, phno, email FROM {_tablename}'):
+		print(f'Name: {name} | Number: {num} | Email: {email}')
 
 
 def add_contact():
@@ -73,11 +77,7 @@ def delete_contact(choice):
 
 def search_contact():
 	"""Searches a contact in the current table and prints all relevant matches."""
-	print('Search contact here...')
-	name_key = input('Enter name: ')
-
-	for contact_detail in c.execute(f'SELECT name FROM {_tablename} WHERE name = ?', name_key):
-		pass
+	pass
 
 
 def import_csv():
