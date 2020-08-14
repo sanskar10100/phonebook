@@ -2,21 +2,29 @@
 
 # For scrub
 from . import user
+import sqlite3
+
+
+# Global sqlite3 connection and cursor
+conn = sqlite3.connect('material.db')
+c = conn.cursor()
+
 
 # Name of current table
 _tablename = ''
+
 
 def _set_tablename(username):
 	# Allows changing the value of global var tablename
 	global _tablename
 	"""Sets tablename based on the username obtained from user module."""
 	_tablename = 'contacts_' + username
+	# Tablename sanitized to avoid SQL injection attacks
 	_tablename = user._scrub(_tablename)
 
 
 def show_all_contacts():
-	"""Shows all contacts in a user's contact table along with the total contact count.
-	Returns a tuple containing all the contacts. If there are no contacts, returns False"""
+	"""Shows all contacts in a user's contact table along with the total contact count."""
 	pass
 
 
@@ -27,19 +35,18 @@ def add_contact():
 	# contact name
 	contact_name = input('Name: ')
 	while contact_name == '' or contact_name == ' ':
-		print('Contact Name can not be null:')
+		print('Error: Contact name can not be null!')
 		contact_name = input('Name: ')
-
-	# append the name in list
-	contact_list.append(contact_name)
+	else:		
+		contact_list.append(contact_name)
 
 	#contact number
 	contact_num = input('Number: ')
 	while contact_num == '' or contact_num == ' ':
-		print('Contact Number can not be null:')
+		print('Error: Contact number can not be null!')
 		contact_num = input('Number: ')
-
-	contact_list.append(contact_num)
+	else:
+		contact_list.append(contact_num)
 
 	# contact email
 	contact_email = input('Email: ')
@@ -48,39 +55,35 @@ def add_contact():
 
 	contact_list.append(contact_email)
 
-	# converting list into tuple
 	contact_tuple = tuple(contact_list)
 	
 	# insert the value in user name table
-	c.execute(f'INSERT INTO {_tablename} VALUES (?, ?, ?) ', contact_tuple)
+	c.execute(f'''INSERT INTO {_tablename} 
+					VALUES (?, ?, ?);''', contact_tuple)
 	conn.commit()
 
-	return 'contact added succefully:'	
+	return 'contact added succefully:'
+
 
 def delete_contact(choice):
-	"""Deletes contact based on the user input from the contacts table/
-	Returns true if successful"""
+	"""Deletes contact based on the user input from the contacts table"""
 	pass
 
 
 def search_contact():
-	"""Searches a contact in the current table and prints all relevant matches.
-	Returns a tuple containing all the matches. If no matches are found, returns False"""
+	"""Searches a contact in the current table and prints all relevant matches."""
 	print('Search contact here...')
 	name_key = input('Enter name: ')
 
-	for contact_detail in c.execute(f'SELECT name FROM material.COLUMNS WHERE {_tablename} = name_key')
-
-
+	for contact_detail in c.execute(f'SELECT name FROM {_tablename} WHERE name = ?', name_key):
+		pass
 
 
 def import_csv():
-	"""Imports a CSV and stores the data into table.
-	Returns true if successful"""
+	"""Imports a CSV and stores the data into table."""
 	pass
 
 
 def export_csv():
-	"""Exports contents of table to a csv file. Input name from user
-	Returns true if successful"""
+	"""Exports contents of table to a csv file. Input name from user."""
 	pass
