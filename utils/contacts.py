@@ -84,9 +84,9 @@ def delete_contact():
 		delete_contact_name = input('Enter name of contact to delete: ')
 
 	# If there's at least one entry in table with given key name, then delete it
-	if c.execute(f'''SELECT * FROM {_tablename} WHERE name = ?''', (delete_contact_name, )).fetchone() is not None:
+	if c.execute(f'''SELECT * FROM {_tablename} WHERE LOWER(name) = ?''', (delete_contact_name.lower(), )).fetchone() is not None:
 		query = c.execute(f'''DELETE FROM {_tablename}
-							WHERE name = ?''', (delete_contact_name, ))
+							WHERE LOWER(name) = ?''', (delete_contact_name.lower(), ))
 		conn.commit()
 		return True
 	else:
@@ -105,7 +105,7 @@ def search_contact():
 	# flag
 	flag = False
 	for contact_name, number, email in c.execute(f'SELECT * FROM {_tablename}'):
-		if name_key in contact_name:
+		if name_key.lower() == contact_name.lower():
 			print(f'Name: {contact_name} | Number: {number} | Email: {email}')
 			flag = True
 
