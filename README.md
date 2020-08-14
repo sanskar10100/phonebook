@@ -29,5 +29,4 @@ Authored by (in alphabetical order):
 - Anuj Kumar Singh
 - Sanskar Agrawal
 - Saumy Pandey
-- Siddhant Singh
 - Som Shiv Gupta
