@@ -25,7 +25,7 @@ def _set_tablename(username):
 
 def show_all_contacts():
 	"""Shows all contacts in a user's contact table along with the total contact count."""
-	printf('Showing all contact...')
+	print('Showing all contact...')
 
 	# showing all contact
 	for name, num, email in c.execute(f'SELECT name, phno, email FROM {_tablename}'):
