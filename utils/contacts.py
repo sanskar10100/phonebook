@@ -57,13 +57,14 @@ def add_contact():
 
 	contact_tuple = tuple(contact_list)
 	
-	# insert the value in user name table
-	c.execute(f'''INSERT INTO {_tablename} 
-					VALUES (?, ?, ?);''', contact_tuple)
-	conn.commit()
-
-	return 'contact added succefully:'
-
+	try:
+		# insert the value in user name table
+		c.execute(f'''INSERT INTO {_tablename} 
+						VALUES (?, ?, ?);''', contact_tuple)
+		conn.commit()
+		return True
+	except:
+		return False
 
 def delete_contact(choice):
 	"""Deletes contact based on the user input from the contacts table"""
