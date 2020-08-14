@@ -113,27 +113,33 @@ def search_contact():
 
 
 def import_csv():
-	"""Imports a CSV from the current directory and stores the data into table."""
-	contact_row = list()
-	file_name = input("Enter file name : ")
-	if not os.path.exists(file_name):
+	"""Imports a CSV from the current directory and stores the data into table.
+
+	Assuming the CSV will be in the following format: name,number,email
+	"""
+	filename = ''
+	while filename == '' or filename == ' ':
+		filename = input('Enter filename (must be in current directory, phonebook/): ')			
+
+	try:
+		with open(filename, 'r') as file:
+			csv_reader = csv.reader(file)
+			for row in csv_reader:
+				print(row)
+				# If either name or number is empty, fail the operation
+				if row[0] == '' or row[1] == '':
+					print('Here')
+					return False
+				# if email doesn't exist
+				if len(row) == 2:
+					row.append('NULL')
+				c.execute(f'''INSERT INTO {_tablename} 
+								VALUES (?, ?, ?)''', tuple(row))
+			else:
+				conn.commit()
+				return True
+	except:
 		return False
-	path = os.path.join(os.getcwd(), file_name)
-	with open(path, 'r') as file:
-		csv_reader = csv.DictReader(file)
-		for key in csv_reader:
-			for value in key.values():
-				contact_row.append(value)
-
-			contact_tuple = tuple(contact_row)
-			contact_row.clear()
-			# insert the value in user name table
-			c.execute(f'''INSERT INTO {_tablename} 
-							VALUES (?, ?, ?);''', contact_tuple)
-			conn.commit()
-	return True
-			
-
 
 def export_csv():
 	"""Exports contents of table to a csv file in the current directory. Input name from user."""
