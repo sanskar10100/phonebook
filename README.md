@@ -15,11 +15,11 @@ A simple python app for managing phonebooks for various users.
 
 #### Contact Management:
 - Show All Contacts
-- Add Contact
-- Delete Contact
-- Search Contact
-- Import CSV
-- Export CSV
+- Add Contact (name and number mandatory, email optional)
+- Delete Contact (By name, case insensitive)
+- Search Contact (By name, case insensitive)
+- Import CSV (In format: name, contact, email)
+- Export CSV (In format: name, contact, email)
 
 ---
 
