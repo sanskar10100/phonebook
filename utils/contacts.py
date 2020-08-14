@@ -56,7 +56,6 @@ def add_contact():
 	contact_list.append(contact_email)
 
 	contact_tuple = tuple(contact_list)
-	
 	try:
 		# insert the value in user name table
 		c.execute(f'''INSERT INTO {_tablename} 
@@ -65,6 +64,7 @@ def add_contact():
 		return True
 	except:
 		return False
+
 
 def delete_contact(choice):
 	"""Deletes contact based on the user input from the contacts table"""
