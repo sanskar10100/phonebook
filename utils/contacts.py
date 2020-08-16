@@ -28,7 +28,7 @@ def _set_tablename(username):
 
 def show_all_contacts():
 	"""Shows all contacts in a user's contact table along with the total contact count."""
-	print('\nShowing all contact...')
+	print('Showing all contacts')
 
 	# execute returns a sqlite object, fetchone fetches the tuple, and index 0 returns the first entry,
 	# is the count
@@ -41,6 +41,7 @@ def show_all_contacts():
 
 def add_contact():
 	"""Adds a contact to the contacts table"""
+	print('Add contact')
 	contact_list = list()
 
 	# contact name
@@ -79,6 +80,7 @@ def add_contact():
 
 def delete_contact():
 	"""Deletes contact based on the user input from the contacts table"""
+	print('Delete contact')
 	delete_contact_name = ''
 
 	while delete_contact_name == '' or delete_contact_name == ' ':
@@ -96,6 +98,7 @@ def delete_contact():
 
 def search_contact():
 	"""Searches a contact in the current table and prints all relevant matches."""
+	print('Search contact')
 	print('Enter Name to search the contact...')
 	name_key = input('Name: ')
 
@@ -118,6 +121,7 @@ def import_csv():
 
 	Assuming the CSV will be in the following format: name,number,email
 	"""
+	print('Import CSV')
 	filename = ''
 	while filename == '' or filename == ' ':
 		filename = input('Enter filename (must be in current directory, phonebook/): ')			
@@ -144,6 +148,7 @@ def import_csv():
 
 def export_csv():
 	"""Exports contents of table to a csv file in the current directory. Input name from user."""
+	print('Export CSV')
 	filename = ''
 
 	# Read the CSV filename while handling incorrect inputs
