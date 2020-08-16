@@ -11,6 +11,14 @@ from utils import user
 from utils import contacts
 import sys
 import time
+import os
+
+def _clear_screen():
+	"""Clears the screen after switching menu"""
+	if os.name == 'nt':
+		_ = os.system(cls)
+	else:
+		_ = os.system('clear')
 
 def _trigger_exit():
 	"""Initiates the exit sequence."""
@@ -21,7 +29,7 @@ def _trigger_exit():
 
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
-	print('\n')
+	print()
 	print('1. Add user')
 	print('2. Delete user')
 	print('3. Select user')
@@ -36,7 +44,7 @@ def _input_user_menu_choice():
 
 def _input_contact_menu_choice():
 	"""Displays contact management options and returns user's input choice"""
-	print('\n')
+	print()
 	print('1. Show all contacts')
 	print('2. Add contact')
 	print('3. Delete contact')
@@ -58,6 +66,7 @@ def _user_management():
 	"""Processes user management menu input"""
 	# Redraw user management menu until a user is successfully selected
 	while True:
+		print('User Management Menu')
 		user_choice = _input_user_menu_choice()
 		if user_choice == 1:
 			if user.add_user() is True:
@@ -83,6 +92,7 @@ def _contacts_management():
 	"""Processes contact management menu input."""
 	# Redraw contact management menu until user exits.
 	while True:
+		print('Contact Management Menu')
 		contacts_choice = _input_contact_menu_choice()
 		if contacts_choice == 1:
 			contacts.show_all_contacts()
@@ -110,6 +120,7 @@ def _contacts_management():
 			else:
 				print('CSV export failed')
 		elif contacts_choice == 7:
+			_clear_screen()
 			_user_management()
 		elif contacts_choice == 8:
 			_trigger_exit()
@@ -119,6 +130,7 @@ def _contacts_management():
 if __name__ == "__main__":
 	try:
 		_user_management()
+		_clear_screen()
 	except KeyboardInterrupt:
 		_trigger_exit()
 	
