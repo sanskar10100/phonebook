@@ -30,6 +30,10 @@ def _trigger_exit():
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
 	print()
+	print('--------------------')
+	print('User Management Menu')
+	print('--------------------')
+	print()
 	print('1. Add user')
 	print('2. Delete user')
 	print('3. Select user')
@@ -44,6 +48,10 @@ def _input_user_menu_choice():
 
 def _input_contact_menu_choice():
 	"""Displays contact management options and returns user's input choice"""
+	print()
+	print('-----------------------')
+	print('Contact Management Menu')
+	print('-----------------------')
 	print()
 	print('1. Show all contacts')
 	print('2. Add contact')
@@ -66,8 +74,8 @@ def _user_management():
 	"""Processes user management menu input"""
 	# Redraw user management menu until a user is successfully selected
 	while True:
-		print('User Management Menu')
 		user_choice = _input_user_menu_choice()
+		_clear_screen()
 		if user_choice == 1:
 			if user.add_user() is True:
 				print('User successfully added')
@@ -92,8 +100,8 @@ def _contacts_management():
 	"""Processes contact management menu input."""
 	# Redraw contact management menu until user exits.
 	while True:
-		print('Contact Management Menu')
 		contacts_choice = _input_contact_menu_choice()
+		_clear_screen()
 		if contacts_choice == 1:
 			contacts.show_all_contacts()
 		elif contacts_choice == 2:
