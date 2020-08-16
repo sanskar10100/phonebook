@@ -71,6 +71,7 @@ def _encryption(login_details):
 
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
+	print('Add user')
 	username, password = _input_credentials()
 
 	if _user_exists(username):
@@ -101,6 +102,7 @@ def add_user():
 
 def remove_user():
 	"""Removes a user and associated contact table from the database."""
+	print('Delete user')
 	username, password = _input_credentials()
 
 	if _user_auth(username, password):
@@ -119,6 +121,7 @@ def remove_user():
 
 def select_user():
 	"""Selects a user for current contact operations."""
+	print('Select user')
 	username, password = _input_credentials()
 
 	if _user_auth(username, password):

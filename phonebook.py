@@ -9,22 +9,7 @@ It also supports import and export of most CSV files for contacts
 
 from utils import user
 from utils import contacts
-import sys
-import time
-import os
-
-def _clear_screen():
-	"""Clears the screen after switching menu"""
-	if os.name == 'nt':
-		_ = os.system(cls)
-	else:
-		_ = os.system('clear')
-
-def _trigger_exit():
-	"""Initiates the exit sequence."""
-	print('\nExiting phonebook!')
-	time.sleep(0.3)
-	sys.exit(1)
+from utils import helper
 
 
 def _input_user_menu_choice():
@@ -75,7 +60,7 @@ def _user_management():
 	# Redraw user management menu until a user is successfully selected
 	while True:
 		user_choice = _input_user_menu_choice()
-		_clear_screen()
+		helper.clear_screen()
 		if user_choice == 1:
 			if user.add_user() is True:
 				print('User successfully added')
@@ -93,7 +78,7 @@ def _user_management():
 			else:
 				print('Error: user does not exist')
 		else:
-			_trigger_exit()
+			helper.trigger_exit()
 
 
 def _contacts_management():
@@ -101,7 +86,7 @@ def _contacts_management():
 	# Redraw contact management menu until user exits.
 	while True:
 		contacts_choice = _input_contact_menu_choice()
-		_clear_screen()
+		helper.clear_screen()
 		if contacts_choice == 1:
 			contacts.show_all_contacts()
 		elif contacts_choice == 2:
@@ -128,21 +113,21 @@ def _contacts_management():
 			else:
 				print('CSV export failed')
 		elif contacts_choice == 7:
-			_clear_screen()
+			helper.clear_screen()
 			_user_management()
 		elif contacts_choice == 8:
-			_trigger_exit()
+			helper.trigger_exit()
 
 
 
 if __name__ == "__main__":
 	try:
 		_user_management()
-		_clear_screen()
+		helper.clear_screen()
 	except KeyboardInterrupt:
-		_trigger_exit()
+		helper.trigger_exit()
 	
 	try:
 		_contacts_management()
 	except KeyboardInterrupt:
-		_trigger_exit()
+		helper.trigger_exit()
