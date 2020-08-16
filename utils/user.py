@@ -1,6 +1,7 @@
 """Module for user table management."""
 
 from . import contacts
+from . import helper
 import hashlib
 import sqlite3
 
@@ -56,11 +57,6 @@ def _input_credentials():
 	return (username, password)
 
 
-def _scrub(table_name):
-	"""Sanitzes input for database"""
-	return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
-
-
 def _encryption(login_details):
 	"""Return the login credential in sha256 encrypted format."""
 	encrypt_login_details = list()
@@ -88,7 +84,7 @@ def add_user():
 
 		#Create contacts table for user. Name: contacts_username
 		#Scrubing the username.
-		tablename = _scrub('contacts_' + username)
+		tablename = helper.scrub('contacts_' + username)
 		c.execute(f"""CREATE TABLE {tablename} (
 			name VARCHAR(255) NOT NULL,
 			phno VARCHAR(20) NOT NULL,
@@ -112,7 +108,7 @@ def remove_user():
 		conn.commit()
 
 		#Remove users contacts table
-		tablename = _scrub('contacts_' + username)
+		tablename = helper.scrub('contacts_' + username)
 		c.execute(f"DROP TABLE {tablename} ")
 		return True
 	else:

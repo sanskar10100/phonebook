@@ -2,6 +2,7 @@
 
 # For scrub
 from . import user
+from . import helper
 import sqlite3
 import csv
 import os
@@ -22,7 +23,7 @@ def _set_tablename(username):
 	"""Sets tablename based on the username obtained from user module."""
 	_tablename = 'contacts_' + username
 	# Tablename sanitized to avoid SQL injection attacks
-	_tablename = user._scrub(_tablename)
+	_tablename = user.helper.scrub(_tablename)
 
 
 def show_all_contacts():

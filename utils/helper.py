@@ -16,3 +16,8 @@ def trigger_exit():
 	print('\nExiting phonebook!')
 	time.sleep(0.3)
 	sys.exit(1)
+
+
+def scrub(table_name):
+	"""Sanitizes input for database query"""
+	return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
