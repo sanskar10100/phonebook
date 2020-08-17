@@ -5,6 +5,7 @@ from . import helper
 import hashlib
 import sqlite3
 import getpass
+import re
 
 
 # opening database and setting connection
@@ -70,6 +71,38 @@ def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
 	print('\nAdd user')
 	username, password = _input_credentials()
+
+	# checking the length of user name
+	if len(username) < 4:
+			print('username is too small:')
+			exit()
+
+	# password prototype
+	print('Password prototype...')
+	print('At least 1 lower case [a - z] alphabet:')
+	print('At least 1 upper case [A - Z] alphabet:')
+	print('At least 1 number or digit [0 - 9]:')
+	print('At least 1 special symbol  [@, #, $, &, +, -, *, ?, ., :, /, ;]:')
+	print('\n')
+
+	flag = True		
+
+	# checking the password strength
+	if len(password) < 8:
+			print('password is to small:')
+			exit()
+	elif not re.search('[a-z]', password):
+		flag = False
+	elif not re.search('[A-Z]', password):
+		flag = False
+	elif not re.search('[0-9]', password):
+		flag = False
+	elif  not re.search('[_:@#$&+-?.*;/]', password):
+		flag = False
+
+	if flag == False:
+		print('Password is did not follow the prototype...')
+		exit()
 
 	if _user_exists(username):
 		return False
