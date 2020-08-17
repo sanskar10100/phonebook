@@ -25,6 +25,8 @@ def _input_user_menu_choice():
 	print('4. Exit')
 	choice = int(input('Input choice: '))
 
+	helper.clear_screen()
+
 	if choice < 1 or choice > 4:
 		raise Exception('Invalid choice')
 	else:
@@ -48,6 +50,7 @@ def _input_contact_menu_choice():
 	print('8. Exit')
 
 	choice = int(input('Input choice: '))
+	helper.clear_screen()
 
 	if choice < 1 or choice > 8:
 		raise Exception('Invalid choice')
@@ -84,7 +87,6 @@ def _contacts_management():
 	"""Processes contact management menu input."""
 	# Redraw contact management menu until user exits.
 	while True:
-		print('Contact Management Menu')
 		contacts_choice = _input_contact_menu_choice()
 		if contacts_choice == 1:
 			contacts.show_all_contacts()
