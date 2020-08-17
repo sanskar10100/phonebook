@@ -50,8 +50,10 @@ def _user_auth(username, password):
 		return True
 	
 
-def _input_credentials():
-	"""Inputs and returns username and password."""
+def _create_input_credentials():
+	"""Inputs, checks and returns username and password. Applicable for creating user name
+	and password only.
+	"""
 	username = input('\nUsername: ')
 
 	# checking if username is less than 4 return false
@@ -88,10 +90,19 @@ def _input_credentials():
 
 	if flag == False:
 		print('Entered Password is not valid:')
+		# Doesn't break tuple unpacking in add_user()
 		return False
 	else:
 		# if all good return username & password
 		return (username, password)
+
+
+def _input_credentials():
+	"""Inputs and returns username and password."""
+	username = print('Username: ')
+	password = print('Password: ')
+
+	return (username, password)
 
 
 def _encryption(login_details):
@@ -105,7 +116,12 @@ def _encryption(login_details):
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
 	print('Add user')
-	username, password = _input_credentials()
+	credentials = _create_input_credentials()
+
+	if isinstance(credentials, bool):
+		return False
+	else:
+		username, password = credentials
 
 	if _user_exists(username):
 		return False
