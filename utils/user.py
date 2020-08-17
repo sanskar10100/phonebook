@@ -54,9 +54,50 @@ def _user_auth(username, password):
 def _input_credentials():
 	"""Inputs and returns username and password."""
 	username = input('Username: ')
-	password = getpass.getpass('Password: ')
+	# password = getpass.getpass('Password: ')
+	password = input('Password: ')
 
 	return (username, password)
+
+
+def _print_credential_criteria():
+	"""Prints the username and password criteria on the screen."""
+	print('\nUsername specification: At least 4 character long and alphanumeric')
+
+	print('\nPassword specifications:')
+	print('At least one lowercase alphabet [a-z]')
+	print('At least one uppercase alphabet [A-Z]')
+	print('At least one digit [0-9]')
+	print('At least one special character [@, #, $, &, +, -, *, ?, ., :, /, ;]\n')
+
+
+def _verify_credential_criteria(username, password):
+	"""Verifies the credential criteria. Program exits if either criteria is not satified.
+
+	username: must be at least 4 alphanumeric characters long
+	password: must be at least 8 characters long. Further password criteria described below
+	"""
+	# Verifying username criteria
+	if len(username) < 4 or not username.isalnum():
+		print('Error: Username must be at least 4 alphanumeric characters long')
+		helper.trigger_exit()
+
+	flag = True
+	# Checking the password strength
+	if len(password) < 8:
+		flag = False
+	elif not re.search('[a-z]', password):
+		flag = False
+	elif not re.search('[A-Z]', password):
+		flag = False
+	elif not re.search('[0-9]', password):
+		flag = False
+	elif not re.search('[_:@#$&+-?.*;/]', password):
+		flag = False
+
+	if flag == False:
+		print('Error: Password did not match the specifications!')
+		helper.trigger_exit()
 
 
 def _encryption(login_details):
@@ -69,40 +110,10 @@ def _encryption(login_details):
 
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
+	_print_credential_criteria()
 	print('\nAdd user')
 	username, password = _input_credentials()
-
-	# checking the length of user name
-	if len(username) < 4:
-			print('username is too small:')
-			exit()
-
-	# password prototype
-	print('Password prototype...')
-	print('At least 1 lower case [a - z] alphabet:')
-	print('At least 1 upper case [A - Z] alphabet:')
-	print('At least 1 number or digit [0 - 9]:')
-	print('At least 1 special symbol  [@, #, $, &, +, -, *, ?, ., :, /, ;]:')
-	print('\n')
-
-	flag = True		
-
-	# checking the password strength
-	if len(password) < 8:
-			print('password is to small:')
-			exit()
-	elif not re.search('[a-z]', password):
-		flag = False
-	elif not re.search('[A-Z]', password):
-		flag = False
-	elif not re.search('[0-9]', password):
-		flag = False
-	elif  not re.search('[_:@#$&+-?.*;/]', password):
-		flag = False
-
-	if flag == False:
-		print('Password is did not follow the prototype...')
-		exit()
+	_verify_credential_criteria(username, password)
 
 	if _user_exists(username):
 		return False
