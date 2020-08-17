@@ -48,53 +48,6 @@ def _user_auth(username, password):
 		return False
 	else:
 		return True
-	
-
-def _create_input_credentials():
-	"""Inputs, checks and returns username and password. Applicable for creating user name
-	and password only.
-	"""
-	username = input('\nUsername: ')
-
-	# checking if username is less than 4 return false
-	if len(username) < 4:
-		print('Username is too small:')
-		return False
-
-	# password prototype
-	print('Password prototype...\n')
-	print('At least 1 lower case [a - z] alphabet..')
-	print('At least 1 upper case [A - Z] alphabet..')
-	print('At least 1 number or digit [0 - 9]..')
-	print('At least 1 special character like [@, #, $, &, +, -, *, ?, .]..\n')
-	password = input('Password: ')
-
-	flag = True
-	while True:
-
-		if len(password) < 8:
-			flag = False
-			break
-		elif not re.search('[a - z]', password):
-			flag = False
-			break
-		elif not re.search('[A - Z]', password):
-			flag = False
-			break
-		elif not re.search('[0 - 9]', password):
-			flag = False
-			break
-		elif not re.search('[@#$&+-*?.]', password):
-			flag = False
-			break
-
-	if flag == False:
-		print('Entered Password is not valid:')
-		# Doesn't break tuple unpacking in add_user()
-		return False
-	else:
-		# if all good return username & password
-		return (username, password)
 
 
 def _input_credentials():
@@ -116,12 +69,7 @@ def _encryption(login_details):
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
 	print('Add user')
-	credentials = _create_input_credentials()
-
-	if isinstance(credentials, bool):
-		return False
-	else:
-		username, password = credentials
+	username, password = _input_credentials()
 
 	if _user_exists(username):
 		return False
