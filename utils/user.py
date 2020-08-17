@@ -99,8 +99,8 @@ def _create_input_credentials():
 
 def _input_credentials():
 	"""Inputs and returns username and password."""
-	username = print('Username: ')
-	password = print('Password: ')
+	username = input('Username: ')
+	password = input('Password: ')
 
 	return (username, password)
 

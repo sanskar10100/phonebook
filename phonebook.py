@@ -9,30 +9,21 @@ It also supports import and export of most CSV files for contacts
 
 from utils import user
 from utils import contacts
-import sys
-import time
-import os
+from utils import helper
 
-def _clear_screen():
-	"""Clears the screen after switching menu"""
-	if os.name == 'nt':
-		_ = os.system('cls')
-	else:
-		_ = os.system('clear')
-
-def _trigger_exit():
-	"""Initiates the exit sequence."""
-	print('\nExiting phonebook!')
-	time.sleep(0.3)
-	sys.exit(1)
 
 def _previous_window():
 	"""Go back to the previous window."""
 	method_name = sys._getframe().f_back.f_code.co_name + '()'
 	eval(method_name)
 
+
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
+	print()
+	print('--------------------')
+	print('User Management Menu')
+	print('--------------------')
 	print()
 	print('1. Add user')
 	print('2. Delete user')
@@ -48,6 +39,10 @@ def _input_user_menu_choice():
 
 def _input_contact_menu_choice():
 	"""Displays contact management options and returns user's input choice"""
+	print()
+	print('-----------------------')
+	print('Contact Management Menu')
+	print('-----------------------')
 	print()
 	print('1. Show all contacts')
 	print('2. Add contact')
@@ -71,7 +66,6 @@ def _user_management():
 	# Redraw user management menu until a user is successfully selected
 	try:
 		while True:
-			print('User Management Menu')
 			user_choice = _input_user_menu_choice()
 			if user_choice == 1:
 				if user.add_user() is True:
@@ -90,7 +84,7 @@ def _user_management():
 				else:
 					print('Error: user does not exist')
 	except KeyboardInterrupt:
-		_trigger_exit()
+		helper.trigger_exit()
 	except EOFError:
 		_previous_window()
 
@@ -128,10 +122,10 @@ def _contacts_management():
 				else:
 					print('CSV export failed')
 			elif contacts_choice == 7:
-				_clear_screen()
+				helper.clear_screen()
 				_user_management()
 			elif contacts_choice == 8:
-				_trigger_exit()
+				helper.trigger_exit()
 	except EOFError:
 		_previous_window()
 
@@ -140,16 +134,16 @@ def _contacts_management():
 if __name__ == "__main__":
 	try:
 		_user_management()
-		_clear_screen()
+		helper.clear_screen()
 	except KeyboardInterrupt:
-		_trigger_exit()
+		helper.trigger_exit()
 	except EOFError:
 		_previous_window()
 	
 	try:
 		_contacts_management()
-		_clear_screen()
+		helper.clear_screen()
 	except KeyboardInterrupt:
-		_trigger_exit()
+		helper.trigger_exit()
 	except EOFError:
 		_previous_window()

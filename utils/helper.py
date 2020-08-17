@@ -1,13 +1,13 @@
 """Module provides various helper functions for main script and other modules."""
 
-import os
-import time
 import sys
+import time
+import os
 
 def clear_screen():
 	"""Clears the screen after switching menu"""
 	if os.name == 'nt':
-		_ = os.system(cls)
+		_ = os.system('cls')
 	else:
 		_ = os.system('clear')
 
