@@ -24,6 +24,8 @@ def _input_user_menu_choice():
 	print('4. Exit')
 	choice = int(input('Input choice: '))
 
+	helper.clear_screen()
+
 	if choice < 1 or choice > 4:
 		raise Exception('Invalid choice')
 	else:
@@ -47,6 +49,7 @@ def _input_contact_menu_choice():
 	print('8. Exit')
 
 	choice = int(input('Input choice: '))
+	helper.clear_screen()
 
 	if choice < 1 or choice > 8:
 		raise Exception('Invalid choice')
@@ -85,6 +88,7 @@ def _user_management():
 def _contacts_management():
 	"""Processes contact management menu input."""
 	# Redraw contact management menu until user exits.
+<<<<<<< HEAD
 	try:
 		while True:
 			print('Contact Management Menu')
@@ -117,6 +121,33 @@ def _contacts_management():
 			elif contacts_choice == 7:
 				helper.clear_screen()
 				_user_management()
+=======
+	while True:
+		contacts_choice = _input_contact_menu_choice()
+		if contacts_choice == 1:
+			contacts.show_all_contacts()
+		elif contacts_choice == 2:
+			if contacts.add_contact() is True:
+				print('Contact added successfully')
+			else:
+				print('Could not add contact')
+		elif contacts_choice == 3:
+			if contacts.delete_contact() is True:
+				print('Contact deleted successfully')
+			else:
+				print('Contact not found')
+		elif contacts_choice == 4:
+			if contacts.search_contact() is False:
+				print('Contact lookup failed')
+		elif contacts_choice == 5:
+			if contacts.import_csv() is True:
+				print('CSV import successful')
+			else:
+				print('CSV import failed')
+		elif contacts_choice == 6:
+			if contacts.export_csv() is True:
+				print('CSV export successful')
+>>>>>>> 26caf0082802b80d3de5bc80a2ee01bf18fc1773
 			else:
 				helper.trigger_exit()
 	except EOFError:

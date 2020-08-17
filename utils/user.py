@@ -4,7 +4,7 @@ from . import contacts
 from . import helper
 import hashlib
 import sqlite3
-import re
+import getpass
 
 
 # opening database and setting connection
@@ -53,7 +53,7 @@ def _user_auth(username, password):
 def _input_credentials():
 	"""Inputs and returns username and password."""
 	username = input('Username: ')
-	password = input('Password: ')
+	password = getpass.getpass('Password: ')
 
 	return (username, password)
 
@@ -68,7 +68,7 @@ def _encryption(login_details):
 
 def add_user():
 	"""Adds user to database if doesn't exist and create a contacts table for him."""
-	print('Add user')
+	print('\nAdd user')
 	username, password = _input_credentials()
 
 	if _user_exists(username):
@@ -99,7 +99,7 @@ def add_user():
 
 def remove_user():
 	"""Removes a user and associated contact table from the database."""
-	print('Delete user')
+	print('\nDelete user')
 	username, password = _input_credentials()
 
 	if _user_auth(username, password):
@@ -118,7 +118,7 @@ def remove_user():
 
 def select_user():
 	"""Selects a user for current contact operations."""
-	print('Select user')
+	print('\nSelect user')
 	username, password = _input_credentials()
 
 	if _user_auth(username, password):
