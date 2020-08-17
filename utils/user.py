@@ -60,11 +60,11 @@ def _input_credentials():
 		return False
 
 	# password prototype
-	print('password prototype...\n')
+	print('Password prototype...\n')
 	print('At least 1 lower case [a - z] alphabet..')
 	print('At least 1 upper case [A - Z] alphabet..')
 	print('At least 1 number or digit [0 - 9]..')
-	print('At least 1 special character like [_ or @ or $]..\n')
+	print('At least 1 special character like [@, #, $, &, +, -, *, ?, .]..\n')
 	password = input('Password: ')
 
 	flag = True
@@ -82,7 +82,7 @@ def _input_credentials():
 		elif not re.search('[0 - 9]', password):
 			flag = False
 			break
-		elif not re.search('[_@$]', password):
+		elif not re.search('[@#$&+-*?.]', password):
 			flag = False
 			break
 
