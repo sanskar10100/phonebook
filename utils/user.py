@@ -4,6 +4,7 @@ from . import contacts
 from . import helper
 import hashlib
 import sqlite3
+import re
 
 
 # opening database and setting connection
@@ -52,9 +53,45 @@ def _user_auth(username, password):
 def _input_credentials():
 	"""Inputs and returns username and password."""
 	username = input('\nUsername: ')
+
+	# checking if username is less than 4 return false
+	if len(username) < 4:
+		print('Username is too small:')
+		return False
+
+	# password prototype
+	print('password prototype...\n')
+	print('At least 1 lower case [a - z] alphabet..')
+	print('At least 1 upper case [A - Z] alphabet..')
+	print('At least 1 number or digit [0 - 9]..')
+	print('At least 1 special character like [_ or @ or $]..\n')
 	password = input('Password: ')
 
-	return (username, password)
+	flag = True
+	while True:
+
+		if len(password) < 8:
+			flag = False
+			break
+		elif not re.search('[a - z]', password):
+			flag = False
+			break
+		elif not re.search('[A - Z]', password):
+			flag = False
+			break
+		elif not re.search('[0 - 9]', password):
+			flag = False
+			break
+		elif not re.search('[_@$]', password):
+			flag = False
+			break
+
+	if flag == False:
+		print('Entered Password is not valid:')
+		return False
+	else:
+		# if all good return username & password
+		return (username, password)
 
 
 def _encryption(login_details):
