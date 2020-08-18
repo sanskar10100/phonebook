@@ -98,8 +98,9 @@ def add_contact():
 	except:
 		return False
 
+
 def modify_contact():
-	"""Modify contact based on the user choice"""
+	"""Modify contact based on the user's choice"""
 	print('\nModifying contact')
 	contact_name = ''
 
@@ -153,7 +154,6 @@ def modify_contact():
 			return True
 		except:
 			return False
-
 
 
 def delete_contact():
@@ -223,6 +223,7 @@ def import_csv():
 				return True
 	except:
 		return False
+
 
 def export_csv():
 	"""Exports contents of table to a csv file in the current directory. Input name from user."""

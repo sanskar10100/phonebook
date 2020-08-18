@@ -11,6 +11,7 @@ def clear_screen():
 	else:
 		_ = os.system('clear')
 
+
 def trigger_exit():
 	"""Initiates the exit sequence."""
 	print('\nExiting phonebook!')
@@ -21,6 +22,7 @@ def trigger_exit():
 def scrub(table_name):
 	"""Sanitizes input for database query"""
 	return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
+
 
 def select_attributes():
 	"""Returns user selected column"""

@@ -43,15 +43,16 @@ def _input_contact_menu_choice():
 	print('2. Add contact')
 	print('3. Delete contact')
 	print('4. Search contact')
-	print('5. Import CSV')
-	print('6. Export CSV')
-	print('7. Switch to user management mode')
-	print('8. Exit')
+	print('5. Modify contact')
+	print('6. Import CSV')
+	print('7. Export CSV')
+	print('8. Switch to user management mode')
+	print('9. Exit')
 
 	choice = int(input('Input choice: '))
 	helper.clear_screen()
 
-	if choice < 1 or choice > 8:
+	if choice < 1 or choice > 9:
 		raise Exception('Invalid choice')
 	else:
 		return choice
@@ -107,16 +108,21 @@ def _contacts_management():
 				if contacts.search_contact() is False:
 					print('Contact lookup failed')
 			elif contacts_choice == 5:
+				if contacts.modify_contact() is True:
+					print('Contact modified successfully')
+				else:
+					print('Unable to modify contact')
+			elif contacts_choice == 6:
 				if contacts.import_csv() is True:
 					print('CSV import successful')
 				else:
 					print('CSV import failed')
-			elif contacts_choice == 6:
+			elif contacts_choice == 7:
 				if contacts.export_csv() is True:
 					print('CSV export successful')
 				else:
 					print('CSV export failed')
-			elif contacts_choice == 7:
+			elif contacts_choice == 8:
 				_user_management()
 				helper.clear_screen()
 			else:

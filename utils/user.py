@@ -54,8 +54,7 @@ def _user_auth(username, password):
 def _input_credentials():
 	"""Inputs and returns username and password."""
 	username = input('Username: ')
-	# password = getpass.getpass('Password: ')
-	password = input('Password: ')
+	password = getpass.getpass('Password: ')
 
 	return (username, password)
 
