@@ -21,3 +21,17 @@ def trigger_exit():
 def scrub(table_name):
 	"""Sanitizes input for database query"""
 	return ''.join( chr for chr in table_name if chr.isalnum() or chr == '_' )
+
+def select_attributes():
+	"""Returns user selected column"""
+	print('Which attribute you want to change.')
+	print('1. Name')
+	print('2. Phone Number')
+	print('3. Email')
+	choice = int(input('Input choice: '))
+
+	clear_screen()
+	if choice < 1 or choice > 4:
+		raise Exception('Invalid choice')
+	else:
+		return choice

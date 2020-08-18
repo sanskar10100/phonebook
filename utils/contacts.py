@@ -77,6 +77,63 @@ def add_contact():
 	except:
 		return False
 
+def modify_contact():
+	"""Modify contact based on the user choice"""
+	print('\nModifying contact')
+	contact_name = ''
+
+	while contact_name == '' or contact_name == ' ':
+		contact_name = input('Enter name of contact to modify: ')
+
+	if c.execute(f'''SELECT * FROM {_tablename} WHERE LOWER(name) = ?''', (contact_name.lower(), )).fetchone() is None:
+		return False
+
+	modify_attribute = helper.select_attributes()
+
+	if modify_attribute == 1:
+		try:
+			modified_name = ''
+			while modified_name == '' or modified_name == ' ':
+				modified_name = input('Enter new name of contact: ')
+
+			c.execute(f'''UPDATE {_tablename} 
+							SET name = ?
+							WHERE LOWER(name) = ?;''', (modified_name, contact_name.lower(), ))
+			conn.commit()
+			return True
+		except:
+			return False
+
+	elif modify_attribute == 2:
+		try:
+			modified_num = input('Number: ')
+			while modified_num == '' or modified_num == ' ':
+				print('Error: Contact number can not be null!')
+				modified_num = input('Number: ')
+
+			c.execute(f'''UPDATE {_tablename} 
+							SET phno = ?
+							WHERE LOWER(name) = ?;''', (modified_num, contact_name.lower(), ))
+			conn.commit()
+			return True
+		except:
+			return False
+
+	elif modify_attribute == 3:
+		try:
+			modified_mail = input('Email: ')
+			while modified_mail == '' or modified_mail  == ' ':
+				modified_mail = 'NULL'
+
+			c.execute(f'''UPDATE {_tablename} 
+							SET email = ?
+							WHERE LOWER(name) = ?;''', (modified_mail, contact_name.lower(), ))
+			conn.commit()
+			return True
+		except:
+			return False
+
+
 
 def delete_contact():
 	"""Deletes contact based on the user input from the contacts table"""
