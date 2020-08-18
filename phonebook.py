@@ -13,6 +13,7 @@ from utils import helper
 
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
+	choice = 0
 	print()
 	print('--------------------')
 	print('User Management Menu')
@@ -22,9 +23,13 @@ def _input_user_menu_choice():
 	print('2. Delete user')
 	print('3. Select user')
 	print('4. Exit')
-	choice = int(input('Input choice: '))
-
-	helper.clear_screen()
+	
+	try:
+		choice = int(input('Input choice: '))
+		helper.clear_screen()
+	except ValueError:
+		print('Error: Invalid Input. Please try again!')
+		_input_user_menu_choice()
 
 	if choice < 1 or choice > 4:
 		raise Exception('Invalid choice')
@@ -34,6 +39,7 @@ def _input_user_menu_choice():
 
 def _input_contact_menu_choice():
 	"""Displays contact management options and returns user's input choice"""
+	choice = 0
 	print()
 	print('-----------------------')
 	print('Contact Management Menu')
@@ -49,8 +55,12 @@ def _input_contact_menu_choice():
 	print('8. Switch to user management mode')
 	print('9. Exit')
 
-	choice = int(input('Input choice: '))
-	helper.clear_screen()
+	try:
+		choice = int(input('Input choice: '))
+		helper.clear_screen()
+	except ValueError:
+		print('Error: Invalid Input. Please try again!')
+		_input_contact_menu_choice()
 
 	if choice < 1 or choice > 9:
 		raise Exception('Invalid choice')

@@ -39,53 +39,54 @@ def show_all_contacts():
 
 
 def add_contact():
-	"""Adds a contact to the contacts table"""
+	"""Adds a contact to the contacts table.
+	Input is validated using Regex matching
+	"""
 	print('\nAdd contact')
 	contact_list = list()
 
 	# contact name
 	contact_name = input('Name: ')
-	# check whether the name is valid or not
-	check_name = re.findall("[a-z,A-Z, ]", contact_name)
-	check_name = "".join(check_name)
-	if (check_name == contact_name):
-		while contact_name == '' or contact_name == ' ':
-			print('Error: Contact name can not be null!')
-			contact_name = input('Name: ')
-		else:		
-			contact_list.append(contact_name)
-
+	if re.fullmatch('[a-zA-Z ]*', contact_name) is None:
+		print('Error: Invalid contact name')
+		return False
 	else:
-		print("Invalid contact name")
+		contact_list.append(contact_name)
 
 	#contact number
 	contact_num = input('Number: ')
-	# check whether the number is valid or not
-	check_number = re.findall("[0-9,+, ,-]", contact_num)
-	check_number = "".join(check_number)
-	if(check_number == contact_num):
-		while contact_num == '' or contact_num == ' ':
-			print('Error: Contact number can not be null!')
-			contact_num = input('Number: ')
-		else:
-			contact_list.append(contact_num)
-
+	# '+' may or may not appear in start of the number
+	# country code may or may not appear
+	# a ' ' may or mat not appear
+	# 10 digits must appear
+	if re.fullmatch('''
+		[+]?
+		[0-9]*
+		[ ]?
+		[0-9]{10}
+		''', contact_num) is None:
+		print('Error: Invalid contact number')
+		return False
 	else:
-		print("Invalid Contact Number")
-	 
+		contact_list.append(contact_num)
 
 	# contact email
 	contact_email = input('Email: ')
-	# check whether the email is valid or not
-	check_email = re.findall("[@,.]", contact_email)
-	if(check_email):
-		if contact_email == '' or contact_email == ' ':
-			contact_email = 'NULL'
-
+	if contact_email == '':
+		contact_email = 'NULL'
 		contact_list.append(contact_email)
-
+	# Copied from GfG
+	elif re.search('''
+		^[a-z0-9]+
+		[\._]?
+		[a-z0-9]+
+		[@]\w+
+		[.]\w{2,3}$
+		''', contact_email) is None:
+			print('Error: Invalid contact email')
+			return False
 	else:
-		print("Invalid Email")
+		contact_list.append(contact_email)
 
 	contact_tuple = tuple(contact_list)
 	try:
@@ -95,6 +96,7 @@ def add_contact():
 		conn.commit()
 		return True
 	except:
+		print('Here in except')
 		return False
 
 
