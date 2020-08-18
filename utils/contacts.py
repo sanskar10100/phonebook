@@ -1,6 +1,5 @@
 """Module for contacts table management for each user."""
 
-# For scrub
 from . import user
 from . import helper
 import sqlite3
