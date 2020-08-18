@@ -6,6 +6,7 @@ from . import helper
 import sqlite3
 import csv
 import os
+import re
 
 
 # Global sqlite3 connection and cursor
@@ -15,8 +16,7 @@ c = conn.cursor()
 
 # Name of current table
 _tablename = ''
-
-
+ 
 def _set_tablename(username):
 	# Allows changing the value of global var tablename
 	global _tablename
@@ -46,26 +46,47 @@ def add_contact():
 
 	# contact name
 	contact_name = input('Name: ')
-	while contact_name == '' or contact_name == ' ':
-		print('Error: Contact name can not be null!')
-		contact_name = input('Name: ')
-	else:		
-		contact_list.append(contact_name)
+	# check whether the name is valid or not
+	check_name = re.findall("[a-z,A-Z, ]", contact_name)
+	check_name = "".join(check_name)
+	if (check_name == contact_name):
+		while contact_name == '' or contact_name == ' ':
+			print('Error: Contact name can not be null!')
+			contact_name = input('Name: ')
+		else:		
+			contact_list.append(contact_name)
+
+	else:
+		print("Invalid contact name")
 
 	#contact number
 	contact_num = input('Number: ')
-	while contact_num == '' or contact_num == ' ':
-		print('Error: Contact number can not be null!')
-		contact_num = input('Number: ')
+	# check whether the number is valid or not
+	check_number = re.findall("[0-9,+, ,-]", contact_num)
+	check_number = "".join(check_number)
+	if(check_number == contact_num):
+		while contact_num == '' or contact_num == ' ':
+			print('Error: Contact number can not be null!')
+			contact_num = input('Number: ')
+		else:
+			contact_list.append(contact_num)
+
 	else:
-		contact_list.append(contact_num)
+		print("Invalid Contact Number")
+	 
 
 	# contact email
 	contact_email = input('Email: ')
-	if contact_email == '' or contact_email == ' ':
-		contact_email = 'NULL'
+	# check whether the email is valid or not
+	check_email = re.findall("[@,.]", contact_email)
+	if(check_email):
+		if contact_email == '' or contact_email == ' ':
+			contact_email = 'NULL'
 
-	contact_list.append(contact_email)
+		contact_list.append(contact_email)
+
+	else:
+		print("Invalid Email")
 
 	contact_tuple = tuple(contact_list)
 	try:
