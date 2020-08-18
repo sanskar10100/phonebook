@@ -25,6 +25,11 @@ A simple python app for managing phonebooks for various users.
 
 ## Note: Do not delete the database, or you'll lose all your data (duh).
 
+## Special Cases:
+- Hit Ctrl + C on Windows/Linux to quit the application at any time
+- Hit Ctrl + Z and enter on Windows (currently not supported on Linx) to go back to the previous menu.
+Helpful if you have selected the wrong option.
+
 ---
 
 ### Authored by (in alphabetical order):
