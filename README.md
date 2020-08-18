@@ -16,8 +16,9 @@ A simple python app for managing phonebooks for various users.
 #### Contact Management:
 - Show All Contacts
 - Add Contact (name and number mandatory, email optional)
-- Delete Contact (By name, case insensitive)
-- Search Contact (By name, case insensitive)
+- Delete Contact (Select on basis of name, case insensitive)
+- Search Contact (Select on basis of name, case insensitive)
+- Modify Contact (Select on basis of name, case insensitive)
 - Import CSV (In format: name, contact, email)
 - Export CSV (In format: name, contact, email)
 
