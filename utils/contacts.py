@@ -59,12 +59,7 @@ def add_contact():
 	# country code may or may not appear
 	# a ' ' may or mat not appear
 	# 10 digits must appear
-	if re.fullmatch('''
-		[+]?
-		[0-9]*
-		[ ]?
-		[0-9]{10}
-		''', contact_num) is None:
+	if re.fullmatch('''[+]?[0-9]*[ ]?[0-9]{10}''', contact_num) is None:
 		print('Error: Invalid contact number')
 		return False
 	else:
@@ -76,13 +71,7 @@ def add_contact():
 		contact_email = 'NULL'
 		contact_list.append(contact_email)
 	# Copied from GfG
-	elif re.search('''
-		^[a-z0-9]+
-		[\._]?
-		[a-z0-9]+
-		[@]\w+
-		[.]\w{2,3}$
-		''', contact_email) is None:
+	elif re.search('''^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$''', contact_email) is None:
 			print('Error: Invalid contact email')
 			return False
 	else:
