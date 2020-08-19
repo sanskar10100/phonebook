@@ -12,9 +12,30 @@ import re
 conn = sqlite3.connect('material.db')
 c = conn.cursor()
 
-
 # Name of current table
 _tablename = ''
+
+
+def _verify_contact_name(name):
+	"""Fails if contact name isn't valid."""
+	if re.fullmatch('[a-zA-Z ]*', name) is None:
+		print('Error: Invalid contact name')
+		return False
+
+
+def _verify_contact_num(num):
+	"""Fails if contact number isn't valid."""
+	if re.fullmatch('''[+]?[0-9]*[ ]?[0-9]{10}''', num) is None:
+			print('Error: Invalid contact number')
+			return False
+
+
+def _verify_contact_email(email):
+	"""Fails if contact email is not valid."""
+	if re.search('''^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$''', email) is None:
+		print('Error: Invalid contact email')
+		return False
+
  
 def _set_tablename(username):
 	# Allows changing the value of global var tablename
@@ -47,8 +68,7 @@ def add_contact():
 
 	# contact name
 	contact_name = input('Name: ')
-	if re.fullmatch('[a-zA-Z ]*', contact_name) is None:
-		print('Error: Invalid contact name')
+	if _verify_contact_name(contact_name) is False:
 		return False
 	else:
 		contact_list.append(contact_name)
@@ -59,8 +79,7 @@ def add_contact():
 	# country code may or may not appear
 	# a ' ' may or mat not appear
 	# 10 digits must appear
-	if re.fullmatch('''[+]?[0-9]*[ ]?[0-9]{10}''', contact_num) is None:
-		print('Error: Invalid contact number')
+	if _verify_contact_num(contact_num) is False:
 		return False
 	else:
 		contact_list.append(contact_num)
@@ -71,9 +90,8 @@ def add_contact():
 		contact_email = 'NULL'
 		contact_list.append(contact_email)
 	# Copied from GfG
-	elif re.search('''^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$''', contact_email) is None:
-			print('Error: Invalid contact email')
-			return False
+	elif _verify_contact_email(contact_email) is False:
+		return False
 	else:
 		contact_list.append(contact_email)
 
@@ -90,7 +108,7 @@ def add_contact():
 
 
 def modify_contact():
-	"""Modify contact based on the user's choice"""
+	"""Modify contact based on the user's choice."""
 	print('\nModifying contact')
 	contact_name = ''
 
@@ -104,9 +122,9 @@ def modify_contact():
 
 	if modify_attribute == 1:
 		try:
-			modified_name = ''
-			while modified_name == '' or modified_name == ' ':
-				modified_name = input('Enter new name of contact: ')
+			modified_name = input('Enter new name of contact: ')
+			if _verify_contact_name(modified_name) is False:
+				return False
 
 			c.execute(f'''UPDATE {_tablename} 
 							SET name = ?
@@ -119,9 +137,8 @@ def modify_contact():
 	elif modify_attribute == 2:
 		try:
 			modified_num = input('Number: ')
-			while modified_num == '' or modified_num == ' ':
-				print('Error: Contact number can not be null!')
-				modified_num = input('Number: ')
+			if _verify_contact_num(modified_num) is False:
+				return False
 
 			c.execute(f'''UPDATE {_tablename} 
 							SET phno = ?
@@ -134,8 +151,10 @@ def modify_contact():
 	elif modify_attribute == 3:
 		try:
 			modified_mail = input('Email: ')
-			while modified_mail == '' or modified_mail  == ' ':
+			if modified_mail == '':
 				modified_mail = 'NULL'
+			elif _verify_contact_email(modified_mail) is False:
+				return False
 
 			c.execute(f'''UPDATE {_tablename} 
 							SET email = ?
