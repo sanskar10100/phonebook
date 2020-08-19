@@ -13,7 +13,6 @@ from utils import helper
 
 def _input_user_menu_choice():
 	"""Displays user management options and returns user's input choice"""
-	choice = 0
 	print()
 	print('--------------------')
 	print('User Management Menu')
@@ -24,17 +23,13 @@ def _input_user_menu_choice():
 	print('3. Select user')
 	print('4. Exit')
 	
-	try:
-		choice = int(input('Input choice: '))
-		helper.clear_screen()
-	except ValueError:
-		print('Error: Invalid Input. Please try again!')
-		_input_user_menu_choice()
-
+	choice = int(input('Input choice: '))
+	helper.clear_screen()
 	if choice < 1 or choice > 4:
 		raise Exception('Invalid choice')
 	else:
 		return choice
+
 
 
 def _input_contact_menu_choice():
@@ -55,13 +50,8 @@ def _input_contact_menu_choice():
 	print('8. Switch to user management mode')
 	print('9. Exit')
 
-	try:
-		choice = int(input('Input choice: '))
-		helper.clear_screen()
-	except ValueError:
-		print('Error: Invalid Input. Please try again!')
-		_input_contact_menu_choice()
-
+	choice = int(input('Input choice: '))
+	helper.clear_screen()
 	if choice < 1 or choice > 9:
 		raise Exception('Invalid choice')
 	else:
@@ -93,6 +83,9 @@ def _user_management():
 			else:
 				helper.trigger_exit()
 	except EOFError:
+		_user_management()
+	except ValueError:
+		print('Error: Invalid Input. Please try again!')
 		_user_management()
 
 
@@ -138,6 +131,9 @@ def _contacts_management():
 			else:
 				helper.trigger_exit()
 	except EOFError:
+		_contacts_management()
+	except ValueError:
+		print('Error: Invalid Input. Please try again!')
 		_contacts_management()
 
 
