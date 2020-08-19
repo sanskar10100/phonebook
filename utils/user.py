@@ -61,9 +61,10 @@ def _input_credentials():
 
 def _print_credential_criteria():
 	"""Prints the username and password criteria on the screen."""
-	print('\nUsername specification: At least 4 character long and alphanumeric')
+	print('\nUsername specification: At least 4 character long. Can contain alphabets or numbers only')
 
 	print('\nPassword specifications:')
+	print('At least 8 characters')
 	print('At least one lowercase alphabet [a-z]')
 	print('At least one uppercase alphabet [A-Z]')
 	print('At least one digit [0-9]')
