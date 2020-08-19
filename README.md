@@ -1,6 +1,6 @@
 # phonebook
 
-A simple python app for managing phonebooks for various users.
+A simple python CLI app for managing phonebooks for various users.
 
 - Seperate contact list maintained for each user
 - Powered by a integer input based command line menu interface.  
