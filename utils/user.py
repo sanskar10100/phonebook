@@ -72,7 +72,7 @@ def _print_credential_criteria():
 
 
 def _verify_credential_criteria(username, password):
-	"""Verifies the credential criteria. Program exits if either criteria is not satified.
+	"""Verifies the credential criteria. Reprompt user if fails.
 
 	username: must be at least 4 alphanumeric characters long
 	password: must be at least 8 characters long. Further password criteria described below
@@ -80,7 +80,7 @@ def _verify_credential_criteria(username, password):
 	# Verifying username criteria
 	if len(username) < 4 or not username.isalnum():
 		print('Error: Username must be at least 4 alphanumeric characters long')
-		helper.trigger_exit()
+		return False
 
 	flag = True
 	# Checking the password strength
@@ -97,7 +97,7 @@ def _verify_credential_criteria(username, password):
 
 	if flag == False:
 		print('Error: Password did not match the specifications!')
-		helper.trigger_exit()
+		return False
 
 
 def _encryption(login_details):
@@ -113,7 +113,9 @@ def add_user():
 	_print_credential_criteria()
 	print('\nAdd user')
 	username, password = _input_credentials()
-	_verify_credential_criteria(username, password)
+	# Prompt user for username and password again if credential criteria doesn't match
+	if _verify_credential_criteria(username, password) is False:
+		add_user()
 
 	if _user_exists(username):
 		return False
