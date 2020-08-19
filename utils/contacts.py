@@ -25,7 +25,7 @@ def _verify_contact_name(name):
 
 def _verify_contact_num(num):
 	"""Fails if contact number isn't valid."""
-	if re.fullmatch('''[+]?[0-9]*[ ]?[0-9]{10}''', num) is None:
+	if re.fullmatch('''[+]?\d{0,3}[ ]?\d{10}''', num) is None:
 			print('Error: Invalid contact number')
 			return False
 
@@ -76,7 +76,7 @@ def add_contact():
 	#contact number
 	contact_num = input('Number: ')
 	# '+' may or may not appear in start of the number
-	# country code may or may not appear
+	# country code may or may not appear (0 to 3 digits)
 	# a ' ' may or mat not appear
 	# 10 digits must appear
 	if _verify_contact_num(contact_num) is False:
