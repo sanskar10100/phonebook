@@ -26,7 +26,7 @@ def _input_user_menu_choice():
 	choice = int(input('Input choice: '))
 	helper.clear_screen()
 	if choice < 1 or choice > 4:
-		raise Exception('Invalid choice')
+		raise ValueError
 	else:
 		return choice
 
@@ -53,7 +53,7 @@ def _input_contact_menu_choice():
 	choice = int(input('Input choice: '))
 	helper.clear_screen()
 	if choice < 1 or choice > 9:
-		raise Exception('Invalid choice')
+		raise ValueError
 	else:
 		return choice
 
