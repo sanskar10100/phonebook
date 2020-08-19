@@ -6,6 +6,7 @@ A simple python CLI app for managing phonebooks for various users.
 - Powered by a integer input based command line menu interface.  
 - The persistance is handled by an sqlite3 database, material.db.
 - User credentials are encrypted.
+- High fault tolearance and scalability.
 
 ## Features:
 #### User Management:
